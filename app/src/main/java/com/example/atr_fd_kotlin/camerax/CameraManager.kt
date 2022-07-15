@@ -160,7 +160,7 @@ class CameraManager(
         val thread = Thread {
             try {
                 //"82.180.139.185"
-                socket = Socket("192.168.0.245", 12344)
+                socket = Socket("82.180.139.185", 12344)
             }
             catch (e:Exception){
 
