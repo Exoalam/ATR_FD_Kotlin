@@ -69,14 +69,14 @@ class Communication(){
                         jsondata.put("TAG", "DATA")
                         jsondata.put("data", "SHUTDOWN")
                         var dataarray = ("^^^" + jsondata.toString() + "$")
-                        client_socket!!.getOutputStream().write(dataarray.toByteArray())
-                        client_socket!!.getOutputStream().flush()
                         if(FaceContourGraphic.image_name == "retrying"){
                             FaceContourGraphic.image_name = "UNKNOWN"
+                            client_socket!!.getOutputStream().write(dataarray.toByteArray())
+                            client_socket!!.getOutputStream().flush()
+                            client_socket!!.getOutputStream().write("$^$".toByteArray())
+                            client_socket!!.getOutputStream().flush()
+                            stop = false
                         }
-                        client_socket!!.getOutputStream().write("$^$".toByteArray())
-                        client_socket!!.getOutputStream().flush()
-                        stop = false
                     }
                     thread.start()
                 }
