@@ -47,11 +47,12 @@ class FaceContourGraphic(
             face.boundingBox
         )
         canvas?.drawRect(rect, boxPaint)
-        canvas?.drawText("Hello", rect.left.toFloat(), rect.top.toFloat(), paint)
+        canvas?.drawText(image_name, rect.left.toFloat(), rect.top.toFloat(), paint)
     }
 
     companion object {
         private const val BOX_STROKE_WIDTH = 5.0f
+        var image_name = ""
     }
 
 }

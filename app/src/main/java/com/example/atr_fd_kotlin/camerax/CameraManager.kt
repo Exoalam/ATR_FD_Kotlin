@@ -1,13 +1,11 @@
 package com.example.atr_fd_kotlin.camerax
 
-import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.Base64
 import android.util.Log
 import android.util.Size
-import android.view.Surface.*
 import androidx.camera.core.*
 import androidx.camera.core.AspectRatio.RATIO_4_3
 import androidx.camera.core.Camera
@@ -15,9 +13,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.example.atr_fd_kotlin.Communication
 import com.example.atr_fd_kotlin.face_detection.FaceContourDetectionProcessor
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.net.Socket
 import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -41,7 +41,6 @@ class CameraManager(
     private var imageAnalyzer: ImageAnalysis? = null
 
     private var imageCapture: ImageCapture? = null
-
 
     init {
         createNewExecutor()
@@ -132,6 +131,8 @@ class CameraManager(
                         val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
                         val encoded: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
                         Log.d("data", "{{" + encoded.toString() + "}}")
+                        val communication: Communication = Communication()
+                        communication.sendData(encoded)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -145,6 +146,7 @@ class CameraManager(
 
     companion object {
         private const val TAG = "CameraXBasic"
+        var socket: Socket? = null
     }
 
     private fun imageProxyToBitmap(image: ImageProxy): Bitmap? {
@@ -152,6 +154,19 @@ class CameraManager(
         val bytes = ByteArray(buffer.remaining())
         buffer.get(bytes)
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
+    }
+
+    fun start_connection(){
+        val thread = Thread {
+            try {
+                //"82.180.139.185"
+                socket = Socket("192.168.0.245", 12344)
+            }
+            catch (e:Exception){
+
+            }
+        }
+        thread.start()
     }
 
 }

@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.TextureView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.atr_fd_kotlin.Communication
 import com.example.atr_fd_kotlin.MainActivity
 import com.example.atr_fd_kotlin.camerax.BaseImageAnalyzer
 import com.example.atr_fd_kotlin.camerax.CameraManager
@@ -18,6 +19,7 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 
 import java.io.IOException
+import java.net.Socket
 
 
 class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
@@ -52,12 +54,13 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
         rect: Rect
     ) {
         graphicOverlay.clear()
-
-        if(gg){
-            timer.start()
-            gg = false
-        }
         results.forEach {
+            if(gg){
+                capture()
+                gg = false
+                var communication: Communication = Communication()
+                communication.receiveData()
+            }
             val faceGraphic = FaceContourGraphic(graphicOverlay, it, rect)
             graphicOverlay.add(faceGraphic)
         }
@@ -75,12 +78,6 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
     fun capture() {
         MainActivity.cameraManager.capture_image()
     }
-    val timer = object: CountDownTimer(5000, 1000) {
-        override fun onTick(millisUntilFinished: Long) {}
 
-        override fun onFinish() {
-            capture()
-        }
-    }
 
 }

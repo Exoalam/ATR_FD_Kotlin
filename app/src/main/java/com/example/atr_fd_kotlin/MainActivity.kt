@@ -12,9 +12,9 @@ import androidx.core.content.ContextCompat
 import com.example.atr_fd_kotlin.camerax.CameraManager
 import com.example.atr_fd_kotlin.face_detection.FaceContourDetectionProcessor
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.Socket
 
 class MainActivity : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +23,16 @@ class MainActivity : AppCompatActivity() {
         createCameraManager()
         checkForPermission()
         onClicks()
+        startConnection()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val thread = Thread {
+            CameraManager.socket!!.getOutputStream().write("$^$".toByteArray())
+            CameraManager.socket!!.getOutputStream().flush()
+        }
+        thread.start()
     }
 
     private fun checkForPermission() {
@@ -43,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun startConnection(){
+        cameraManager.start_connection()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
