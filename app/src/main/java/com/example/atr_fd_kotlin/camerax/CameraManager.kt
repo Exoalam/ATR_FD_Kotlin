@@ -73,7 +73,7 @@ class CameraManager(
                 imageCapture = ImageCapture.Builder()
                     .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                     .setBufferFormat(ImageFormat.JPEG)
-                    .setDefaultResolution(Size(256, 256))
+                    .setDefaultResolution(Size(512, 512))
                     .setTargetAspectRatio(RATIO_4_3)
                     .build()
 

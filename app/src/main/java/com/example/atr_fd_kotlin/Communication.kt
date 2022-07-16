@@ -26,8 +26,8 @@ class Communication(){
                 while (currentSize < dataarray.length) {
                     FaceContourGraphic.image_name = "Working"
                     try {
-                        if (currentCount * 1024 + 1024 > dataarray.length) {
-                            val dataToSend: String = dataarray.substring(currentCount * 1024)
+                        if (currentCount * 1048576 + 1048576 > dataarray.length) {
+                            val dataToSend: String = dataarray.substring(currentCount * 1048576)
                             client_socket!!.getOutputStream()
                                 .write(dataToSend.toByteArray(StandardCharsets.UTF_8))
                             client_socket!!.getOutputStream().flush()
@@ -35,11 +35,11 @@ class Communication(){
                             Log.d("ts", currentCount.toString())
                         } else {
                             val dataToSend: String =
-                                dataarray.substring(currentCount * 1024, currentCount * 1024 + 1024)
+                                dataarray.substring(currentCount * 1048576, currentCount * 1048576 + 1048576)
                             client_socket!!.getOutputStream()
                                 .write(dataToSend.toByteArray(StandardCharsets.UTF_8))
                             client_socket!!.getOutputStream().flush()
-                            currentSize += 1024
+                            currentSize += 1048576
                             Log.d("ts", currentCount.toString())
                         }
                         currentCount++
