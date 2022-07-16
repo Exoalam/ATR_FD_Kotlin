@@ -28,7 +28,6 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
         .setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
         .build()
-    var gg = true
     private val  imaged: Image? = null
     private val detector = FaceDetection.getClient(realTimeOpts)
 
@@ -72,6 +71,7 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
     }
 
     companion object {
+        var gg = true
         private const val TAG = "FaceDetectorProcessor"
     }
 

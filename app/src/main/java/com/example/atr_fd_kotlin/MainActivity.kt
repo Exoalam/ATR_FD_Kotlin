@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.atr_fd_kotlin.camerax.CameraManager
 import com.example.atr_fd_kotlin.face_detection.FaceContourDetectionProcessor
+import com.example.atr_fd_kotlin.face_detection.FaceContourGraphic
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.Socket
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         checkForPermission()
         onClicks()
         startConnection()
+        retrybutton()
     }
 
     override fun onStop() {
@@ -33,6 +35,15 @@ class MainActivity : AppCompatActivity() {
             CameraManager.socket!!.getOutputStream().flush()
         }
         thread.start()
+    }
+
+    private fun retrybutton(){
+        retry.setOnClickListener {
+            FaceContourDetectionProcessor.gg = true
+            FaceContourGraphic.image_name = ""
+            cameraManager.start_connection()
+
+        }
     }
 
     private fun checkForPermission() {
