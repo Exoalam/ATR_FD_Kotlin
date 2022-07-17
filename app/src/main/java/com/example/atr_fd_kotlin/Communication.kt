@@ -24,7 +24,7 @@ class Communication(){
                 var currentCount = 0
 
                 while (currentSize < dataarray.length) {
-                    FaceContourGraphic.image_name = "Working"
+                    FaceContourGraphic.image_name = "Loading..."
                     try {
                         if (currentCount * 1048576 + 1048576 > dataarray.length) {
                             val dataToSend: String = dataarray.substring(currentCount * 1048576)
